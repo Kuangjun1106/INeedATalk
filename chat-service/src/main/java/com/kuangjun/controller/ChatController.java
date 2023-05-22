@@ -11,9 +11,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @RequestMapping("/chat")
 public class ChatController {
+
     @GetMapping("hi")
     public String hi(){
         return "hi";
     }
+    /**
+     * 发送聊天
+     */
+
+
 
 }

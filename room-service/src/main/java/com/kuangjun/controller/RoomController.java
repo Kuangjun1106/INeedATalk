@@ -14,12 +14,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class RoomController {
 
     /**
-     * todo: 查找聊天室、进入聊天室
+     * todo: 查找聊天室、进入聊天室、显示聊天
      *
      */
     @GetMapping("hi")
     public String hi(){
         return "hi";
     }
+
 
 }
