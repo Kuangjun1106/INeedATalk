@@ -11,10 +11,10 @@ spring:
   cloud:
     nacos:
       discovery:
-        server-addr: localhost:8848 # nacos 服务地址
+        server-addr: 10.134.58.144:8848 # nacos 服务地址
         cluster-name: WH
   rabbitmq:
-    host: localhost
+    host: 192.168.106.102
     port: 5672 # rabbit mq 端口
     username: root
     password: root
