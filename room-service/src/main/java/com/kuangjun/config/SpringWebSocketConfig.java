@@ -12,13 +12,26 @@ public class SpringWebSocketConfig implements WebSocketConfigurer {
     @Override
     public void registerWebSocketHandlers(WebSocketHandlerRegistry registry) {
         //添加通信地址路径
-        registry.addHandler(buildTextHandler(), "/room").setAllowedOrigins("*");
+        registry.addHandler(buildTextHandler(), "/room")
+                .addInterceptors(springBootHandshakeInterceptor())
+                .setAllowedOrigins("*");
     }
 
+    /**
+     * 添加消息处理器
+     * @return
+     */
     @Bean
     public WebSocketHandler buildTextHandler() {
-        //添加消息处理器
         return new TextHandler();
     }
 
+    /**
+     * 添加握手拦截
+     * @return
+     */
+    @Bean
+    public SpringBootHandshakeInterceptor springBootHandshakeInterceptor() {
+        return new SpringBootHandshakeInterceptor();
+    }
 }

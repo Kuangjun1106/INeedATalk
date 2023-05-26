@@ -22,8 +22,10 @@ public class SpringBootHandshakeInterceptor implements HandshakeInterceptor {
      * WebSocketSession.getAttributes()
      */
     @Override
-    public boolean beforeHandshake(ServerHttpRequest serverHttpRequest, ServerHttpResponse serverHttpResponse,
-                                   WebSocketHandler wsHandler, Map<String, Object> attributes) throws Exception {
+    public boolean beforeHandshake(ServerHttpRequest serverHttpRequest,
+                                   ServerHttpResponse serverHttpResponse,
+                                   WebSocketHandler wsHandler,
+                                   Map<String, Object> attributes){
         ServletServerHttpRequest servletServerHttpRequest = (ServletServerHttpRequest) serverHttpRequest;
         // 得到Http协议的请求对象
         HttpServletRequest request = servletServerHttpRequest.getServletRequest();
