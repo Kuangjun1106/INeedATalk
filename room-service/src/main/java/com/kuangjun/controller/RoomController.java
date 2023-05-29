@@ -3,8 +3,10 @@ package com.kuangjun.controller;
 import com.alibaba.fastjson.JSON;
 import com.kuangjun.config.SessionManager;
 import com.kuangjun.model.Message;
+import com.kuangjun.service.RoomService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -16,10 +18,7 @@ import org.springframework.web.socket.WebSocketMessage;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 /**
  * @Author KJ
@@ -32,6 +31,9 @@ import java.util.Set;
 public class RoomController {
 
     private static final Map<String, Set<String>> users = new HashMap<>();
+
+    @Autowired
+    RoomService roomService;
 
     /**
      * 删除房间中的用户
@@ -58,7 +60,6 @@ public class RoomController {
     public String enterRoom(String roomName) {
         HttpSession httpSession = getHttpSession();
         httpSession.setAttribute("roomName", roomName);
-
         Set<String> set = users.get(roomName);
         if (set == null) {
             set = new HashSet<>();
@@ -70,6 +71,12 @@ public class RoomController {
         return "success";
     }
 
+    @GetMapping("history")
+    public String showHistory(String roomName){
+        List<Message> messages = roomService.showHistory(roomName);
+        return JSON.toJSONString(messages);
+    }
+
     /**
      * 向所有在该房间的用户发送消息
      *
@@ -77,6 +84,8 @@ public class RoomController {
      */
     @RabbitListener(queues = "chat.queue")
     public void sendToRoom(Message msg) {
+        roomService.saveMessage(msg);
+
         log.info("我接受到了实时通信请求：" + msg);
         String roomName = msg.getRoomName();
         Set<String> set = users.get(roomName);

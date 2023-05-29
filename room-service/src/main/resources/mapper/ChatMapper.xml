@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kuangjun.mapper.RoomMapper">
+    <select id="showHistory" parameterType="string" resultType="message">
+        select room_name as roomname, username as nickname, content, create_time as time
+        from chat
+        where room_name = #{roomName}
+        ORDER BY create_time ASC
+    </select>
+
+    <insert id="saveMessage" parameterType="message">
+        insert into
+        chat(room_name, username, content, create_time)
+        values
+        (#{roomName}, #{nickName}, #{content}, #{time})
+    </insert>
+
+</mapper>

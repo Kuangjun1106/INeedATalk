@@ -1,5 +1,7 @@
 package com.kuangjun.model;
 
+import java.util.Date;
+
 /**
  * @Author KJ
  * @Date 2023/5/24 上午 8:22
@@ -8,7 +10,7 @@ public class Message {
     private String roomName;
     private String nickName;
     private String content;
-    private String time;
+    private Date time;
 
     public String getRoomName() {
         return roomName;
@@ -34,11 +36,11 @@ public class Message {
         this.content = content;
     }
 
-    public String getTime() {
+    public Date getTime() {
         return time;
     }
 
-    public void setTime(String time) {
+    public void setTime(Date time) {
         this.time = time;
     }
 
